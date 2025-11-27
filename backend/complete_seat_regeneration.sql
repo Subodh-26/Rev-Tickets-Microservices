@@ -1,0 +1,364 @@
+-- Complete seat regeneration for show 15 with sequential numbering
+-- Blocked seats: negative seat_number based on position
+-- Bookable seats: sequential 1-646
+
+USE revticketsnew;
+
+-- Row A: positions 1-8, 19-26 blocked (16 blocked, 10 bookable)
+-- Blocked seats with negative numbers
+INSERT INTO seats (show_id, row_label, seat_number, seat_type, price, is_available, is_blocked) VALUES
+(15, 'A', -1, 'REGULAR', 295.00, 0, 1), (15, 'A', -2, 'REGULAR', 295.00, 0, 1),
+(15, 'A', -3, 'REGULAR', 295.00, 0, 1), (15, 'A', -4, 'REGULAR', 295.00, 0, 1),
+(15, 'A', -5, 'REGULAR', 295.00, 0, 1), (15, 'A', -6, 'REGULAR', 295.00, 0, 1),
+(15, 'A', -7, 'REGULAR', 295.00, 0, 1), (15, 'A', -8, 'REGULAR', 295.00, 0, 1),
+(15, 'A', -19, 'REGULAR', 295.00, 0, 1), (15, 'A', -20, 'REGULAR', 295.00, 0, 1),
+(15, 'A', -21, 'REGULAR', 295.00, 0, 1), (15, 'A', -22, 'REGULAR', 295.00, 0, 1),
+(15, 'A', -23, 'REGULAR', 295.00, 0, 1), (15, 'A', -24, 'REGULAR', 295.00, 0, 1),
+(15, 'A', -25, 'REGULAR', 295.00, 0, 1), (15, 'A', -26, 'REGULAR', 295.00, 0, 1);
+
+-- Bookable seats 1-10 (positions A9-A18)
+INSERT INTO seats (show_id, row_label, seat_number, seat_type, price, is_available, is_blocked) VALUES
+(15, 'A', 1, 'REGULAR', 295.00, 1, 0), (15, 'A', 2, 'REGULAR', 295.00, 1, 0),
+(15, 'A', 3, 'REGULAR', 295.00, 1, 0), (15, 'A', 4, 'REGULAR', 295.00, 1, 0),
+(15, 'A', 5, 'REGULAR', 295.00, 1, 0), (15, 'A', 6, 'REGULAR', 295.00, 1, 0),
+(15, 'A', 7, 'REGULAR', 295.00, 1, 0), (15, 'A', 8, 'REGULAR', 295.00, 1, 0),
+(15, 'A', 9, 'REGULAR', 295.00, 1, 0), (15, 'A', 10, 'REGULAR', 295.00, 1, 0);
+
+-- Row B: positions 1-4, 23-26 blocked (8 blocked, 18 bookable)
+INSERT INTO seats (show_id, row_label, seat_number, seat_type, price, is_available, is_blocked) VALUES
+(15, 'B', -1, 'REGULAR', 295.00, 0, 1), (15, 'B', -2, 'REGULAR', 295.00, 0, 1),
+(15, 'B', -3, 'REGULAR', 295.00, 0, 1), (15, 'B', -4, 'REGULAR', 295.00, 0, 1),
+(15, 'B', -23, 'REGULAR', 295.00, 0, 1), (15, 'B', -24, 'REGULAR', 295.00, 0, 1),
+(15, 'B', -25, 'REGULAR', 295.00, 0, 1), (15, 'B', -26, 'REGULAR', 295.00, 0, 1);
+
+-- Bookable seats 11-28 (positions B5-B22)
+INSERT INTO seats (show_id, row_label, seat_number, seat_type, price, is_available, is_blocked) VALUES
+(15, 'B', 11, 'REGULAR', 295.00, 1, 0), (15, 'B', 12, 'REGULAR', 295.00, 1, 0),
+(15, 'B', 13, 'REGULAR', 295.00, 1, 0), (15, 'B', 14, 'REGULAR', 295.00, 1, 0),
+(15, 'B', 15, 'REGULAR', 295.00, 1, 0), (15, 'B', 16, 'REGULAR', 295.00, 1, 0),
+(15, 'B', 17, 'REGULAR', 295.00, 1, 0), (15, 'B', 18, 'REGULAR', 295.00, 1, 0),
+(15, 'B', 19, 'REGULAR', 295.00, 1, 0), (15, 'B', 20, 'REGULAR', 295.00, 1, 0),
+(15, 'B', 21, 'REGULAR', 295.00, 1, 0), (15, 'B', 22, 'REGULAR', 295.00, 1, 0),
+(15, 'B', 23, 'REGULAR', 295.00, 1, 0), (15, 'B', 24, 'REGULAR', 295.00, 1, 0),
+(15, 'B', 25, 'REGULAR', 295.00, 1, 0), (15, 'B', 26, 'REGULAR', 295.00, 1, 0),
+(15, 'B', 27, 'REGULAR', 295.00, 1, 0), (15, 'B', 28, 'REGULAR', 295.00, 1, 0);
+
+-- Row C: positions 1-2, 25-26 blocked (4 blocked, 22 bookable)
+INSERT INTO seats (show_id, row_label, seat_number, seat_type, price, is_available, is_blocked) VALUES
+(15, 'C', -1, 'REGULAR', 295.00, 0, 1), (15, 'C', -2, 'REGULAR', 295.00, 0, 1),
+(15, 'C', -25, 'REGULAR', 295.00, 0, 1), (15, 'C', -26, 'REGULAR', 295.00, 0, 1);
+
+-- Bookable seats 29-50 (positions C3-C24)
+INSERT INTO seats (show_id, row_label, seat_number, seat_type, price, is_available, is_blocked) VALUES
+(15, 'C', 29, 'REGULAR', 295.00, 1, 0), (15, 'C', 30, 'REGULAR', 295.00, 1, 0),
+(15, 'C', 31, 'REGULAR', 295.00, 1, 0), (15, 'C', 32, 'REGULAR', 295.00, 1, 0),
+(15, 'C', 33, 'REGULAR', 295.00, 1, 0), (15, 'C', 34, 'REGULAR', 295.00, 1, 0),
+(15, 'C', 35, 'REGULAR', 295.00, 1, 0), (15, 'C', 36, 'REGULAR', 295.00, 1, 0),
+(15, 'C', 37, 'REGULAR', 295.00, 1, 0), (15, 'C', 38, 'REGULAR', 295.00, 1, 0),
+(15, 'C', 39, 'REGULAR', 295.00, 1, 0), (15, 'C', 40, 'REGULAR', 295.00, 1, 0),
+(15, 'C', 41, 'REGULAR', 295.00, 1, 0), (15, 'C', 42, 'REGULAR', 295.00, 1, 0),
+(15, 'C', 43, 'REGULAR', 295.00, 1, 0), (15, 'C', 44, 'REGULAR', 295.00, 1, 0),
+(15, 'C', 45, 'REGULAR', 295.00, 1, 0), (15, 'C', 46, 'REGULAR', 295.00, 1, 0),
+(15, 'C', 47, 'REGULAR', 295.00, 1, 0), (15, 'C', 48, 'REGULAR', 295.00, 1, 0),
+(15, 'C', 49, 'REGULAR', 295.00, 1, 0), (15, 'C', 50, 'REGULAR', 295.00, 1, 0);
+
+-- Row D: positions 1, 26 blocked (2 blocked, 24 bookable)
+INSERT INTO seats (show_id, row_label, seat_number, seat_type, price, is_available, is_blocked) VALUES
+(15, 'D', -1, 'REGULAR', 295.00, 0, 1), (15, 'D', -26, 'REGULAR', 295.00, 0, 1);
+
+-- Bookable seats 51-74 (positions D2-D25)
+INSERT INTO seats (show_id, row_label, seat_number, seat_type, price, is_available, is_blocked) VALUES
+(15, 'D', 51, 'REGULAR', 295.00, 1, 0), (15, 'D', 52, 'REGULAR', 295.00, 1, 0),
+(15, 'D', 53, 'REGULAR', 295.00, 1, 0), (15, 'D', 54, 'REGULAR', 295.00, 1, 0),
+(15, 'D', 55, 'REGULAR', 295.00, 1, 0), (15, 'D', 56, 'REGULAR', 295.00, 1, 0),
+(15, 'D', 57, 'REGULAR', 295.00, 1, 0), (15, 'D', 58, 'REGULAR', 295.00, 1, 0),
+(15, 'D', 59, 'REGULAR', 295.00, 1, 0), (15, 'D', 60, 'REGULAR', 295.00, 1, 0),
+(15, 'D', 61, 'REGULAR', 295.00, 1, 0), (15, 'D', 62, 'REGULAR', 295.00, 1, 0),
+(15, 'D', 63, 'REGULAR', 295.00, 1, 0), (15, 'D', 64, 'REGULAR', 295.00, 1, 0),
+(15, 'D', 65, 'REGULAR', 295.00, 1, 0), (15, 'D', 66, 'REGULAR', 295.00, 1, 0),
+(15, 'D', 67, 'REGULAR', 295.00, 1, 0), (15, 'D', 68, 'REGULAR', 295.00, 1, 0),
+(15, 'D', 69, 'REGULAR', 295.00, 1, 0), (15, 'D', 70, 'REGULAR', 295.00, 1, 0),
+(15, 'D', 71, 'REGULAR', 295.00, 1, 0), (15, 'D', 72, 'REGULAR', 295.00, 1, 0),
+(15, 'D', 73, 'REGULAR', 295.00, 1, 0), (15, 'D', 74, 'REGULAR', 295.00, 1, 0);
+
+-- Rows E-Z: all 26 positions bookable (22 rows × 26 seats = 572 seats, numbered 75-646)
+-- Row E: 75-100
+INSERT INTO seats (show_id, row_label, seat_number, seat_type, price, is_available, is_blocked) VALUES
+(15,'E',75,'REGULAR',295.00,1,0),(15,'E',76,'REGULAR',295.00,1,0),(15,'E',77,'REGULAR',295.00,1,0),
+(15,'E',78,'REGULAR',295.00,1,0),(15,'E',79,'REGULAR',295.00,1,0),(15,'E',80,'REGULAR',295.00,1,0),
+(15,'E',81,'REGULAR',295.00,1,0),(15,'E',82,'REGULAR',295.00,1,0),(15,'E',83,'REGULAR',295.00,1,0),
+(15,'E',84,'REGULAR',295.00,1,0),(15,'E',85,'REGULAR',295.00,1,0),(15,'E',86,'REGULAR',295.00,1,0),
+(15,'E',87,'REGULAR',295.00,1,0),(15,'E',88,'REGULAR',295.00,1,0),(15,'E',89,'REGULAR',295.00,1,0),
+(15,'E',90,'REGULAR',295.00,1,0),(15,'E',91,'REGULAR',295.00,1,0),(15,'E',92,'REGULAR',295.00,1,0),
+(15,'E',93,'REGULAR',295.00,1,0),(15,'E',94,'REGULAR',295.00,1,0),(15,'E',95,'REGULAR',295.00,1,0),
+(15,'E',96,'REGULAR',295.00,1,0),(15,'E',97,'REGULAR',295.00,1,0),(15,'E',98,'REGULAR',295.00,1,0),
+(15,'E',99,'REGULAR',295.00,1,0),(15,'E',100,'REGULAR',295.00,1,0);
+
+-- Row F: 101-126
+INSERT INTO seats (show_id, row_label, seat_number, seat_type, price, is_available, is_blocked) VALUES
+(15,'F',101,'REGULAR',295.00,1,0),(15,'F',102,'REGULAR',295.00,1,0),(15,'F',103,'REGULAR',295.00,1,0),
+(15,'F',104,'REGULAR',295.00,1,0),(15,'F',105,'REGULAR',295.00,1,0),(15,'F',106,'REGULAR',295.00,1,0),
+(15,'F',107,'REGULAR',295.00,1,0),(15,'F',108,'REGULAR',295.00,1,0),(15,'F',109,'REGULAR',295.00,1,0),
+(15,'F',110,'REGULAR',295.00,1,0),(15,'F',111,'REGULAR',295.00,1,0),(15,'F',112,'REGULAR',295.00,1,0),
+(15,'F',113,'REGULAR',295.00,1,0),(15,'F',114,'REGULAR',295.00,1,0),(15,'F',115,'REGULAR',295.00,1,0),
+(15,'F',116,'REGULAR',295.00,1,0),(15,'F',117,'REGULAR',295.00,1,0),(15,'F',118,'REGULAR',295.00,1,0),
+(15,'F',119,'REGULAR',295.00,1,0),(15,'F',120,'REGULAR',295.00,1,0),(15,'F',121,'REGULAR',295.00,1,0),
+(15,'F',122,'REGULAR',295.00,1,0),(15,'F',123,'REGULAR',295.00,1,0),(15,'F',124,'REGULAR',295.00,1,0),
+(15,'F',125,'REGULAR',295.00,1,0),(15,'F',126,'REGULAR',295.00,1,0);
+
+-- Row G: 127-152
+INSERT INTO seats (show_id, row_label, seat_number, seat_type, price, is_available, is_blocked) VALUES
+(15,'G',127,'REGULAR',295.00,1,0),(15,'G',128,'REGULAR',295.00,1,0),(15,'G',129,'REGULAR',295.00,1,0),
+(15,'G',130,'REGULAR',295.00,1,0),(15,'G',131,'REGULAR',295.00,1,0),(15,'G',132,'REGULAR',295.00,1,0),
+(15,'G',133,'REGULAR',295.00,1,0),(15,'G',134,'REGULAR',295.00,1,0),(15,'G',135,'REGULAR',295.00,1,0),
+(15,'G',136,'REGULAR',295.00,1,0),(15,'G',137,'REGULAR',295.00,1,0),(15,'G',138,'REGULAR',295.00,1,0),
+(15,'G',139,'REGULAR',295.00,1,0),(15,'G',140,'REGULAR',295.00,1,0),(15,'G',141,'REGULAR',295.00,1,0),
+(15,'G',142,'REGULAR',295.00,1,0),(15,'G',143,'REGULAR',295.00,1,0),(15,'G',144,'REGULAR',295.00,1,0),
+(15,'G',145,'REGULAR',295.00,1,0),(15,'G',146,'REGULAR',295.00,1,0),(15,'G',147,'REGULAR',295.00,1,0),
+(15,'G',148,'REGULAR',295.00,1,0),(15,'G',149,'REGULAR',295.00,1,0),(15,'G',150,'REGULAR',295.00,1,0),
+(15,'G',151,'REGULAR',295.00,1,0),(15,'G',152,'REGULAR',295.00,1,0);
+
+-- Row H: 153-178
+INSERT INTO seats (show_id, row_label, seat_number, seat_type, price, is_available, is_blocked) VALUES
+(15,'H',153,'REGULAR',295.00,1,0),(15,'H',154,'REGULAR',295.00,1,0),(15,'H',155,'REGULAR',295.00,1,0),
+(15,'H',156,'REGULAR',295.00,1,0),(15,'H',157,'REGULAR',295.00,1,0),(15,'H',158,'REGULAR',295.00,1,0),
+(15,'H',159,'REGULAR',295.00,1,0),(15,'H',160,'REGULAR',295.00,1,0),(15,'H',161,'REGULAR',295.00,1,0),
+(15,'H',162,'REGULAR',295.00,1,0),(15,'H',163,'REGULAR',295.00,1,0),(15,'H',164,'REGULAR',295.00,1,0),
+(15,'H',165,'REGULAR',295.00,1,0),(15,'H',166,'REGULAR',295.00,1,0),(15,'H',167,'REGULAR',295.00,1,0),
+(15,'H',168,'REGULAR',295.00,1,0),(15,'H',169,'REGULAR',295.00,1,0),(15,'H',170,'REGULAR',295.00,1,0),
+(15,'H',171,'REGULAR',295.00,1,0),(15,'H',172,'REGULAR',295.00,1,0),(15,'H',173,'REGULAR',295.00,1,0),
+(15,'H',174,'REGULAR',295.00,1,0),(15,'H',175,'REGULAR',295.00,1,0),(15,'H',176,'REGULAR',295.00,1,0),
+(15,'H',177,'REGULAR',295.00,1,0),(15,'H',178,'REGULAR',295.00,1,0);
+
+-- Row I: 179-204
+INSERT INTO seats (show_id, row_label, seat_number, seat_type, price, is_available, is_blocked) VALUES
+(15,'I',179,'REGULAR',295.00,1,0),(15,'I',180,'REGULAR',295.00,1,0),(15,'I',181,'REGULAR',295.00,1,0),
+(15,'I',182,'REGULAR',295.00,1,0),(15,'I',183,'REGULAR',295.00,1,0),(15,'I',184,'REGULAR',295.00,1,0),
+(15,'I',185,'REGULAR',295.00,1,0),(15,'I',186,'REGULAR',295.00,1,0),(15,'I',187,'REGULAR',295.00,1,0),
+(15,'I',188,'REGULAR',295.00,1,0),(15,'I',189,'REGULAR',295.00,1,0),(15,'I',190,'REGULAR',295.00,1,0),
+(15,'I',191,'REGULAR',295.00,1,0),(15,'I',192,'REGULAR',295.00,1,0),(15,'I',193,'REGULAR',295.00,1,0),
+(15,'I',194,'REGULAR',295.00,1,0),(15,'I',195,'REGULAR',295.00,1,0),(15,'I',196,'REGULAR',295.00,1,0),
+(15,'I',197,'REGULAR',295.00,1,0),(15,'I',198,'REGULAR',295.00,1,0),(15,'I',199,'REGULAR',295.00,1,0),
+(15,'I',200,'REGULAR',295.00,1,0),(15,'I',201,'REGULAR',295.00,1,0),(15,'I',202,'REGULAR',295.00,1,0),
+(15,'I',203,'REGULAR',295.00,1,0),(15,'I',204,'REGULAR',295.00,1,0);
+
+-- Row J: 205-230
+INSERT INTO seats (show_id, row_label, seat_number, seat_type, price, is_available, is_blocked) VALUES
+(15,'J',205,'REGULAR',295.00,1,0),(15,'J',206,'REGULAR',295.00,1,0),(15,'J',207,'REGULAR',295.00,1,0),
+(15,'J',208,'REGULAR',295.00,1,0),(15,'J',209,'REGULAR',295.00,1,0),(15,'J',210,'REGULAR',295.00,1,0),
+(15,'J',211,'REGULAR',295.00,1,0),(15,'J',212,'REGULAR',295.00,1,0),(15,'J',213,'REGULAR',295.00,1,0),
+(15,'J',214,'REGULAR',295.00,1,0),(15,'J',215,'REGULAR',295.00,1,0),(15,'J',216,'REGULAR',295.00,1,0),
+(15,'J',217,'REGULAR',295.00,1,0),(15,'J',218,'REGULAR',295.00,1,0),(15,'J',219,'REGULAR',295.00,1,0),
+(15,'J',220,'REGULAR',295.00,1,0),(15,'J',221,'REGULAR',295.00,1,0),(15,'J',222,'REGULAR',295.00,1,0),
+(15,'J',223,'REGULAR',295.00,1,0),(15,'J',224,'REGULAR',295.00,1,0),(15,'J',225,'REGULAR',295.00,1,0),
+(15,'J',226,'REGULAR',295.00,1,0),(15,'J',227,'REGULAR',295.00,1,0),(15,'J',228,'REGULAR',295.00,1,0),
+(15,'J',229,'REGULAR',295.00,1,0),(15,'J',230,'REGULAR',295.00,1,0);
+
+-- Row K: 231-256
+INSERT INTO seats (show_id, row_label, seat_number, seat_type, price, is_available, is_blocked) VALUES
+(15,'K',231,'REGULAR',295.00,1,0),(15,'K',232,'REGULAR',295.00,1,0),(15,'K',233,'REGULAR',295.00,1,0),
+(15,'K',234,'REGULAR',295.00,1,0),(15,'K',235,'REGULAR',295.00,1,0),(15,'K',236,'REGULAR',295.00,1,0),
+(15,'K',237,'REGULAR',295.00,1,0),(15,'K',238,'REGULAR',295.00,1,0),(15,'K',239,'REGULAR',295.00,1,0),
+(15,'K',240,'REGULAR',295.00,1,0),(15,'K',241,'REGULAR',295.00,1,0),(15,'K',242,'REGULAR',295.00,1,0),
+(15,'K',243,'REGULAR',295.00,1,0),(15,'K',244,'REGULAR',295.00,1,0),(15,'K',245,'REGULAR',295.00,1,0),
+(15,'K',246,'REGULAR',295.00,1,0),(15,'K',247,'REGULAR',295.00,1,0),(15,'K',248,'REGULAR',295.00,1,0),
+(15,'K',249,'REGULAR',295.00,1,0),(15,'K',250,'REGULAR',295.00,1,0),(15,'K',251,'REGULAR',295.00,1,0),
+(15,'K',252,'REGULAR',295.00,1,0),(15,'K',253,'REGULAR',295.00,1,0),(15,'K',254,'REGULAR',295.00,1,0),
+(15,'K',255,'REGULAR',295.00,1,0),(15,'K',256,'REGULAR',295.00,1,0);
+
+-- Row L: 257-282
+INSERT INTO seats (show_id, row_label, seat_number, seat_type, price, is_available, is_blocked) VALUES
+(15,'L',257,'REGULAR',295.00,1,0),(15,'L',258,'REGULAR',295.00,1,0),(15,'L',259,'REGULAR',295.00,1,0),
+(15,'L',260,'REGULAR',295.00,1,0),(15,'L',261,'REGULAR',295.00,1,0),(15,'L',262,'REGULAR',295.00,1,0),
+(15,'L',263,'REGULAR',295.00,1,0),(15,'L',264,'REGULAR',295.00,1,0),(15,'L',265,'REGULAR',295.00,1,0),
+(15,'L',266,'REGULAR',295.00,1,0),(15,'L',267,'REGULAR',295.00,1,0),(15,'L',268,'REGULAR',295.00,1,0),
+(15,'L',269,'REGULAR',295.00,1,0),(15,'L',270,'REGULAR',295.00,1,0),(15,'L',271,'REGULAR',295.00,1,0),
+(15,'L',272,'REGULAR',295.00,1,0),(15,'L',273,'REGULAR',295.00,1,0),(15,'L',274,'REGULAR',295.00,1,0),
+(15,'L',275,'REGULAR',295.00,1,0),(15,'L',276,'REGULAR',295.00,1,0),(15,'L',277,'REGULAR',295.00,1,0),
+(15,'L',278,'REGULAR',295.00,1,0),(15,'L',279,'REGULAR',295.00,1,0),(15,'L',280,'REGULAR',295.00,1,0),
+(15,'L',281,'REGULAR',295.00,1,0),(15,'L',282,'REGULAR',295.00,1,0);
+
+-- Row M: 283-308
+INSERT INTO seats (show_id, row_label, seat_number, seat_type, price, is_available, is_blocked) VALUES
+(15,'M',283,'REGULAR',295.00,1,0),(15,'M',284,'REGULAR',295.00,1,0),(15,'M',285,'REGULAR',295.00,1,0),
+(15,'M',286,'REGULAR',295.00,1,0),(15,'M',287,'REGULAR',295.00,1,0),(15,'M',288,'REGULAR',295.00,1,0),
+(15,'M',289,'REGULAR',295.00,1,0),(15,'M',290,'REGULAR',295.00,1,0),(15,'M',291,'REGULAR',295.00,1,0),
+(15,'M',292,'REGULAR',295.00,1,0),(15,'M',293,'REGULAR',295.00,1,0),(15,'M',294,'REGULAR',295.00,1,0),
+(15,'M',295,'REGULAR',295.00,1,0),(15,'M',296,'REGULAR',295.00,1,0),(15,'M',297,'REGULAR',295.00,1,0),
+(15,'M',298,'REGULAR',295.00,1,0),(15,'M',299,'REGULAR',295.00,1,0),(15,'M',300,'REGULAR',295.00,1,0),
+(15,'M',301,'REGULAR',295.00,1,0),(15,'M',302,'REGULAR',295.00,1,0),(15,'M',303,'REGULAR',295.00,1,0),
+(15,'M',304,'REGULAR',295.00,1,0),(15,'M',305,'REGULAR',295.00,1,0),(15,'M',306,'REGULAR',295.00,1,0),
+(15,'M',307,'REGULAR',295.00,1,0),(15,'M',308,'REGULAR',295.00,1,0);
+
+-- Row N: 309-334
+INSERT INTO seats (show_id, row_label, seat_number, seat_type, price, is_available, is_blocked) VALUES
+(15,'N',309,'REGULAR',295.00,1,0),(15,'N',310,'REGULAR',295.00,1,0),(15,'N',311,'REGULAR',295.00,1,0),
+(15,'N',312,'REGULAR',295.00,1,0),(15,'N',313,'REGULAR',295.00,1,0),(15,'N',314,'REGULAR',295.00,1,0),
+(15,'N',315,'REGULAR',295.00,1,0),(15,'N',316,'REGULAR',295.00,1,0),(15,'N',317,'REGULAR',295.00,1,0),
+(15,'N',318,'REGULAR',295.00,1,0),(15,'N',319,'REGULAR',295.00,1,0),(15,'N',320,'REGULAR',295.00,1,0),
+(15,'N',321,'REGULAR',295.00,1,0),(15,'N',322,'REGULAR',295.00,1,0),(15,'N',323,'REGULAR',295.00,1,0),
+(15,'N',324,'REGULAR',295.00,1,0),(15,'N',325,'REGULAR',295.00,1,0),(15,'N',326,'REGULAR',295.00,1,0),
+(15,'N',327,'REGULAR',295.00,1,0),(15,'N',328,'REGULAR',295.00,1,0),(15,'N',329,'REGULAR',295.00,1,0),
+(15,'N',330,'REGULAR',295.00,1,0),(15,'N',331,'REGULAR',295.00,1,0),(15,'N',332,'REGULAR',295.00,1,0),
+(15,'N',333,'REGULAR',295.00,1,0),(15,'N',334,'REGULAR',295.00,1,0);
+
+-- Row O: 335-360
+INSERT INTO seats (show_id, row_label, seat_number, seat_type, price, is_available, is_blocked) VALUES
+(15,'O',335,'REGULAR',295.00,1,0),(15,'O',336,'REGULAR',295.00,1,0),(15,'O',337,'REGULAR',295.00,1,0),
+(15,'O',338,'REGULAR',295.00,1,0),(15,'O',339,'REGULAR',295.00,1,0),(15,'O',340,'REGULAR',295.00,1,0),
+(15,'O',341,'REGULAR',295.00,1,0),(15,'O',342,'REGULAR',295.00,1,0),(15,'O',343,'REGULAR',295.00,1,0),
+(15,'O',344,'REGULAR',295.00,1,0),(15,'O',345,'REGULAR',295.00,1,0),(15,'O',346,'REGULAR',295.00,1,0),
+(15,'O',347,'REGULAR',295.00,1,0),(15,'O',348,'REGULAR',295.00,1,0),(15,'O',349,'REGULAR',295.00,1,0),
+(15,'O',350,'REGULAR',295.00,1,0),(15,'O',351,'REGULAR',295.00,1,0),(15,'O',352,'REGULAR',295.00,1,0),
+(15,'O',353,'REGULAR',295.00,1,0),(15,'O',354,'REGULAR',295.00,1,0),(15,'O',355,'REGULAR',295.00,1,0),
+(15,'O',356,'REGULAR',295.00,1,0),(15,'O',357,'REGULAR',295.00,1,0),(15,'O',358,'REGULAR',295.00,1,0),
+(15,'O',359,'REGULAR',295.00,1,0),(15,'O',360,'REGULAR',295.00,1,0);
+
+-- Row P: 361-386
+INSERT INTO seats (show_id, row_label, seat_number, seat_type, price, is_available, is_blocked) VALUES
+(15,'P',361,'REGULAR',295.00,1,0),(15,'P',362,'REGULAR',295.00,1,0),(15,'P',363,'REGULAR',295.00,1,0),
+(15,'P',364,'REGULAR',295.00,1,0),(15,'P',365,'REGULAR',295.00,1,0),(15,'P',366,'REGULAR',295.00,1,0),
+(15,'P',367,'REGULAR',295.00,1,0),(15,'P',368,'REGULAR',295.00,1,0),(15,'P',369,'REGULAR',295.00,1,0),
+(15,'P',370,'REGULAR',295.00,1,0),(15,'P',371,'REGULAR',295.00,1,0),(15,'P',372,'REGULAR',295.00,1,0),
+(15,'P',373,'REGULAR',295.00,1,0),(15,'P',374,'REGULAR',295.00,1,0),(15,'P',375,'REGULAR',295.00,1,0),
+(15,'P',376,'REGULAR',295.00,1,0),(15,'P',377,'REGULAR',295.00,1,0),(15,'P',378,'REGULAR',295.00,1,0),
+(15,'P',379,'REGULAR',295.00,1,0),(15,'P',380,'REGULAR',295.00,1,0),(15,'P',381,'REGULAR',295.00,1,0),
+(15,'P',382,'REGULAR',295.00,1,0),(15,'P',383,'REGULAR',295.00,1,0),(15,'P',384,'REGULAR',295.00,1,0),
+(15,'P',385,'REGULAR',295.00,1,0),(15,'P',386,'REGULAR',295.00,1,0);
+
+-- Row Q: 387-412
+INSERT INTO seats (show_id, row_label, seat_number, seat_type, price, is_available, is_blocked) VALUES
+(15,'Q',387,'REGULAR',295.00,1,0),(15,'Q',388,'REGULAR',295.00,1,0),(15,'Q',389,'REGULAR',295.00,1,0),
+(15,'Q',390,'REGULAR',295.00,1,0),(15,'Q',391,'REGULAR',295.00,1,0),(15,'Q',392,'REGULAR',295.00,1,0),
+(15,'Q',393,'REGULAR',295.00,1,0),(15,'Q',394,'REGULAR',295.00,1,0),(15,'Q',395,'REGULAR',295.00,1,0),
+(15,'Q',396,'REGULAR',295.00,1,0),(15,'Q',397,'REGULAR',295.00,1,0),(15,'Q',398,'REGULAR',295.00,1,0),
+(15,'Q',399,'REGULAR',295.00,1,0),(15,'Q',400,'REGULAR',295.00,1,0),(15,'Q',401,'REGULAR',295.00,1,0),
+(15,'Q',402,'REGULAR',295.00,1,0),(15,'Q',403,'REGULAR',295.00,1,0),(15,'Q',404,'REGULAR',295.00,1,0),
+(15,'Q',405,'REGULAR',295.00,1,0),(15,'Q',406,'REGULAR',295.00,1,0),(15,'Q',407,'REGULAR',295.00,1,0),
+(15,'Q',408,'REGULAR',295.00,1,0),(15,'Q',409,'REGULAR',295.00,1,0),(15,'Q',410,'REGULAR',295.00,1,0),
+(15,'Q',411,'REGULAR',295.00,1,0),(15,'Q',412,'REGULAR',295.00,1,0);
+
+-- Row R: 413-438
+INSERT INTO seats (show_id, row_label, seat_number, seat_type, price, is_available, is_blocked) VALUES
+(15,'R',413,'REGULAR',295.00,1,0),(15,'R',414,'REGULAR',295.00,1,0),(15,'R',415,'REGULAR',295.00,1,0),
+(15,'R',416,'REGULAR',295.00,1,0),(15,'R',417,'REGULAR',295.00,1,0),(15,'R',418,'REGULAR',295.00,1,0),
+(15,'R',419,'REGULAR',295.00,1,0),(15,'R',420,'REGULAR',295.00,1,0),(15,'R',421,'REGULAR',295.00,1,0),
+(15,'R',422,'REGULAR',295.00,1,0),(15,'R',423,'REGULAR',295.00,1,0),(15,'R',424,'REGULAR',295.00,1,0),
+(15,'R',425,'REGULAR',295.00,1,0),(15,'R',426,'REGULAR',295.00,1,0),(15,'R',427,'REGULAR',295.00,1,0),
+(15,'R',428,'REGULAR',295.00,1,0),(15,'R',429,'REGULAR',295.00,1,0),(15,'R',430,'REGULAR',295.00,1,0),
+(15,'R',431,'REGULAR',295.00,1,0),(15,'R',432,'REGULAR',295.00,1,0),(15,'R',433,'REGULAR',295.00,1,0),
+(15,'R',434,'REGULAR',295.00,1,0),(15,'R',435,'REGULAR',295.00,1,0),(15,'R',436,'REGULAR',295.00,1,0),
+(15,'R',437,'REGULAR',295.00,1,0),(15,'R',438,'REGULAR',295.00,1,0);
+
+-- Row S: 439-464
+INSERT INTO seats (show_id, row_label, seat_number, seat_type, price, is_available, is_blocked) VALUES
+(15,'S',439,'REGULAR',295.00,1,0),(15,'S',440,'REGULAR',295.00,1,0),(15,'S',441,'REGULAR',295.00,1,0),
+(15,'S',442,'REGULAR',295.00,1,0),(15,'S',443,'REGULAR',295.00,1,0),(15,'S',444,'REGULAR',295.00,1,0),
+(15,'S',445,'REGULAR',295.00,1,0),(15,'S',446,'REGULAR',295.00,1,0),(15,'S',447,'REGULAR',295.00,1,0),
+(15,'S',448,'REGULAR',295.00,1,0),(15,'S',449,'REGULAR',295.00,1,0),(15,'S',450,'REGULAR',295.00,1,0),
+(15,'S',451,'REGULAR',295.00,1,0),(15,'S',452,'REGULAR',295.00,1,0),(15,'S',453,'REGULAR',295.00,1,0),
+(15,'S',454,'REGULAR',295.00,1,0),(15,'S',455,'REGULAR',295.00,1,0),(15,'S',456,'REGULAR',295.00,1,0),
+(15,'S',457,'REGULAR',295.00,1,0),(15,'S',458,'REGULAR',295.00,1,0),(15,'S',459,'REGULAR',295.00,1,0),
+(15,'S',460,'REGULAR',295.00,1,0),(15,'S',461,'REGULAR',295.00,1,0),(15,'S',462,'REGULAR',295.00,1,0),
+(15,'S',463,'REGULAR',295.00,1,0),(15,'S',464,'REGULAR',295.00,1,0);
+
+-- Row T: 465-490
+INSERT INTO seats (show_id, row_label, seat_number, seat_type, price, is_available, is_blocked) VALUES
+(15,'T',465,'REGULAR',295.00,1,0),(15,'T',466,'REGULAR',295.00,1,0),(15,'T',467,'REGULAR',295.00,1,0),
+(15,'T',468,'REGULAR',295.00,1,0),(15,'T',469,'REGULAR',295.00,1,0),(15,'T',470,'REGULAR',295.00,1,0),
+(15,'T',471,'REGULAR',295.00,1,0),(15,'T',472,'REGULAR',295.00,1,0),(15,'T',473,'REGULAR',295.00,1,0),
+(15,'T',474,'REGULAR',295.00,1,0),(15,'T',475,'REGULAR',295.00,1,0),(15,'T',476,'REGULAR',295.00,1,0),
+(15,'T',477,'REGULAR',295.00,1,0),(15,'T',478,'REGULAR',295.00,1,0),(15,'T',479,'REGULAR',295.00,1,0),
+(15,'T',480,'REGULAR',295.00,1,0),(15,'T',481,'REGULAR',295.00,1,0),(15,'T',482,'REGULAR',295.00,1,0),
+(15,'T',483,'REGULAR',295.00,1,0),(15,'T',484,'REGULAR',295.00,1,0),(15,'T',485,'REGULAR',295.00,1,0),
+(15,'T',486,'REGULAR',295.00,1,0),(15,'T',487,'REGULAR',295.00,1,0),(15,'T',488,'REGULAR',295.00,1,0),
+(15,'T',489,'REGULAR',295.00,1,0),(15,'T',490,'REGULAR',295.00,1,0);
+
+-- Row U: 491-516
+INSERT INTO seats (show_id, row_label, seat_number, seat_type, price, is_available, is_blocked) VALUES
+(15,'U',491,'REGULAR',295.00,1,0),(15,'U',492,'REGULAR',295.00,1,0),(15,'U',493,'REGULAR',295.00,1,0),
+(15,'U',494,'REGULAR',295.00,1,0),(15,'U',495,'REGULAR',295.00,1,0),(15,'U',496,'REGULAR',295.00,1,0),
+(15,'U',497,'REGULAR',295.00,1,0),(15,'U',498,'REGULAR',295.00,1,0),(15,'U',499,'REGULAR',295.00,1,0),
+(15,'U',500,'REGULAR',295.00,1,0),(15,'U',501,'REGULAR',295.00,1,0),(15,'U',502,'REGULAR',295.00,1,0),
+(15,'U',503,'REGULAR',295.00,1,0),(15,'U',504,'REGULAR',295.00,1,0),(15,'U',505,'REGULAR',295.00,1,0),
+(15,'U',506,'REGULAR',295.00,1,0),(15,'U',507,'REGULAR',295.00,1,0),(15,'U',508,'REGULAR',295.00,1,0),
+(15,'U',509,'REGULAR',295.00,1,0),(15,'U',510,'REGULAR',295.00,1,0),(15,'U',511,'REGULAR',295.00,1,0),
+(15,'U',512,'REGULAR',295.00,1,0),(15,'U',513,'REGULAR',295.00,1,0),(15,'U',514,'REGULAR',295.00,1,0),
+(15,'U',515,'REGULAR',295.00,1,0),(15,'U',516,'REGULAR',295.00,1,0);
+
+-- Row V: 517-542
+INSERT INTO seats (show_id, row_label, seat_number, seat_type, price, is_available, is_blocked) VALUES
+(15,'V',517,'REGULAR',295.00,1,0),(15,'V',518,'REGULAR',295.00,1,0),(15,'V',519,'REGULAR',295.00,1,0),
+(15,'V',520,'REGULAR',295.00,1,0),(15,'V',521,'REGULAR',295.00,1,0),(15,'V',522,'REGULAR',295.00,1,0),
+(15,'V',523,'REGULAR',295.00,1,0),(15,'V',524,'REGULAR',295.00,1,0),(15,'V',525,'REGULAR',295.00,1,0),
+(15,'V',526,'REGULAR',295.00,1,0),(15,'V',527,'REGULAR',295.00,1,0),(15,'V',528,'REGULAR',295.00,1,0),
+(15,'V',529,'REGULAR',295.00,1,0),(15,'V',530,'REGULAR',295.00,1,0),(15,'V',531,'REGULAR',295.00,1,0),
+(15,'V',532,'REGULAR',295.00,1,0),(15,'V',533,'REGULAR',295.00,1,0),(15,'V',534,'REGULAR',295.00,1,0),
+(15,'V',535,'REGULAR',295.00,1,0),(15,'V',536,'REGULAR',295.00,1,0),(15,'V',537,'REGULAR',295.00,1,0),
+(15,'V',538,'REGULAR',295.00,1,0),(15,'V',539,'REGULAR',295.00,1,0),(15,'V',540,'REGULAR',295.00,1,0),
+(15,'V',541,'REGULAR',295.00,1,0),(15,'V',542,'REGULAR',295.00,1,0);
+
+-- Row W: 543-568
+INSERT INTO seats (show_id, row_label, seat_number, seat_type, price, is_available, is_blocked) VALUES
+(15,'W',543,'REGULAR',295.00,1,0),(15,'W',544,'REGULAR',295.00,1,0),(15,'W',545,'REGULAR',295.00,1,0),
+(15,'W',546,'REGULAR',295.00,1,0),(15,'W',547,'REGULAR',295.00,1,0),(15,'W',548,'REGULAR',295.00,1,0),
+(15,'W',549,'REGULAR',295.00,1,0),(15,'W',550,'REGULAR',295.00,1,0),(15,'W',551,'REGULAR',295.00,1,0),
+(15,'W',552,'REGULAR',295.00,1,0),(15,'W',553,'REGULAR',295.00,1,0),(15,'W',554,'REGULAR',295.00,1,0),
+(15,'W',555,'REGULAR',295.00,1,0),(15,'W',556,'REGULAR',295.00,1,0),(15,'W',557,'REGULAR',295.00,1,0),
+(15,'W',558,'REGULAR',295.00,1,0),(15,'W',559,'REGULAR',295.00,1,0),(15,'W',560,'REGULAR',295.00,1,0),
+(15,'W',561,'REGULAR',295.00,1,0),(15,'W',562,'REGULAR',295.00,1,0),(15,'W',563,'REGULAR',295.00,1,0),
+(15,'W',564,'REGULAR',295.00,1,0),(15,'W',565,'REGULAR',295.00,1,0),(15,'W',566,'REGULAR',295.00,1,0),
+(15,'W',567,'REGULAR',295.00,1,0),(15,'W',568,'REGULAR',295.00,1,0);
+
+-- Row X: 569-594
+INSERT INTO seats (show_id, row_label, seat_number, seat_type, price, is_available, is_blocked) VALUES
+(15,'X',569,'REGULAR',295.00,1,0),(15,'X',570,'REGULAR',295.00,1,0),(15,'X',571,'REGULAR',295.00,1,0),
+(15,'X',572,'REGULAR',295.00,1,0),(15,'X',573,'REGULAR',295.00,1,0),(15,'X',574,'REGULAR',295.00,1,0),
+(15,'X',575,'REGULAR',295.00,1,0),(15,'X',576,'REGULAR',295.00,1,0),(15,'X',577,'REGULAR',295.00,1,0),
+(15,'X',578,'REGULAR',295.00,1,0),(15,'X',579,'REGULAR',295.00,1,0),(15,'X',580,'REGULAR',295.00,1,0),
+(15,'X',581,'REGULAR',295.00,1,0),(15,'X',582,'REGULAR',295.00,1,0),(15,'X',583,'REGULAR',295.00,1,0),
+(15,'X',584,'REGULAR',295.00,1,0),(15,'X',585,'REGULAR',295.00,1,0),(15,'X',586,'REGULAR',295.00,1,0),
+(15,'X',587,'REGULAR',295.00,1,0),(15,'X',588,'REGULAR',295.00,1,0),(15,'X',589,'REGULAR',295.00,1,0),
+(15,'X',590,'REGULAR',295.00,1,0),(15,'X',591,'REGULAR',295.00,1,0),(15,'X',592,'REGULAR',295.00,1,0),
+(15,'X',593,'REGULAR',295.00,1,0),(15,'X',594,'REGULAR',295.00,1,0);
+
+-- Row Y: 595-620
+INSERT INTO seats (show_id, row_label, seat_number, seat_type, price, is_available, is_blocked) VALUES
+(15,'Y',595,'REGULAR',295.00,1,0),(15,'Y',596,'REGULAR',295.00,1,0),(15,'Y',597,'REGULAR',295.00,1,0),
+(15,'Y',598,'REGULAR',295.00,1,0),(15,'Y',599,'REGULAR',295.00,1,0),(15,'Y',600,'REGULAR',295.00,1,0),
+(15,'Y',601,'REGULAR',295.00,1,0),(15,'Y',602,'REGULAR',295.00,1,0),(15,'Y',603,'REGULAR',295.00,1,0),
+(15,'Y',604,'REGULAR',295.00,1,0),(15,'Y',605,'REGULAR',295.00,1,0),(15,'Y',606,'REGULAR',295.00,1,0),
+(15,'Y',607,'REGULAR',295.00,1,0),(15,'Y',608,'REGULAR',295.00,1,0),(15,'Y',609,'REGULAR',295.00,1,0),
+(15,'Y',610,'REGULAR',295.00,1,0),(15,'Y',611,'REGULAR',295.00,1,0),(15,'Y',612,'REGULAR',295.00,1,0),
+(15,'Y',613,'REGULAR',295.00,1,0),(15,'Y',614,'REGULAR',295.00,1,0),(15,'Y',615,'REGULAR',295.00,1,0),
+(15,'Y',616,'REGULAR',295.00,1,0),(15,'Y',617,'REGULAR',295.00,1,0),(15,'Y',618,'REGULAR',295.00,1,0),
+(15,'Y',619,'REGULAR',295.00,1,0),(15,'Y',620,'REGULAR',295.00,1,0);
+
+-- Row Z: 621-646
+INSERT INTO seats (show_id, row_label, seat_number, seat_type, price, is_available, is_blocked) VALUES
+(15,'Z',621,'REGULAR',295.00,1,0),(15,'Z',622,'REGULAR',295.00,1,0),(15,'Z',623,'REGULAR',295.00,1,0),
+(15,'Z',624,'REGULAR',295.00,1,0),(15,'Z',625,'REGULAR',295.00,1,0),(15,'Z',626,'REGULAR',295.00,1,0),
+(15,'Z',627,'REGULAR',295.00,1,0),(15,'Z',628,'REGULAR',295.00,1,0),(15,'Z',629,'REGULAR',295.00,1,0),
+(15,'Z',630,'REGULAR',295.00,1,0),(15,'Z',631,'REGULAR',295.00,1,0),(15,'Z',632,'REGULAR',295.00,1,0),
+(15,'Z',633,'REGULAR',295.00,1,0),(15,'Z',634,'REGULAR',295.00,1,0),(15,'Z',635,'REGULAR',295.00,1,0),
+(15,'Z',636,'REGULAR',295.00,1,0),(15,'Z',637,'REGULAR',295.00,1,0),(15,'Z',638,'REGULAR',295.00,1,0),
+(15,'Z',639,'REGULAR',295.00,1,0),(15,'Z',640,'REGULAR',295.00,1,0),(15,'Z',641,'REGULAR',295.00,1,0),
+(15,'Z',642,'REGULAR',295.00,1,0),(15,'Z',643,'REGULAR',295.00,1,0),(15,'Z',644,'REGULAR',295.00,1,0),
+(15,'Z',645,'REGULAR',295.00,1,0),(15,'Z',646,'REGULAR',295.00,1,0);
+
+-- Verification queries
+SELECT 'Total Summary' AS info, 
+    COUNT(*) AS total_seats,
+    SUM(CASE WHEN is_blocked = 1 THEN 1 ELSE 0 END) AS blocked_count,
+    SUM(CASE WHEN is_blocked = 0 THEN 1 ELSE 0 END) AS bookable_count,
+    MIN(CASE WHEN is_blocked = 0 THEN seat_number END) AS min_bookable,
+    MAX(CASE WHEN is_blocked = 0 THEN seat_number END) AS max_bookable
+FROM seats WHERE show_id = 15;
+
+SELECT 'Row Breakdown' AS info, row_label, 
+    COUNT(*) AS total,
+    SUM(CASE WHEN is_blocked = 1 THEN 1 ELSE 0 END) AS blocked,
+    SUM(CASE WHEN is_blocked = 0 THEN 1 ELSE 0 END) AS bookable
+FROM seats WHERE show_id = 15
+GROUP BY row_label
+ORDER BY row_label;

@@ -1,0 +1,135 @@
+.payment-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.payment-card {
+  background: white;
+  border-radius: 16px;
+  padding: 40px;
+  max-width: 500px;
+  width: 100%;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 30px;
+  font-size: 28px;
+  font-weight: 600;
+}
+
+.booking-summary {
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 25px;
+}
+
+.booking-summary h3 {
+  color: #667eea;
+  margin-bottom: 15px;
+  font-size: 18px;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.summary-row:last-child {
+  border-bottom: none;
+}
+
+.summary-row.total {
+  margin-top: 10px;
+  padding-top: 15px;
+  border-top: 2px solid #667eea;
+  font-weight: 600;
+  font-size: 20px;
+  color: #667eea;
+}
+
+.label {
+  color: #666;
+}
+
+.value {
+  color: #333;
+  font-weight: 500;
+}
+
+.zone-breakdown {
+  background: #fff3cd;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 25px;
+}
+
+.zone-breakdown h4 {
+  color: #856404;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+.zone-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  color: #856404;
+}
+
+.zone-subtotal {
+  font-weight: 600;
+}
+
+.pay-button {
+  width: 100%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 16px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  margin-bottom: 20px;
+}
+
+.pay-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+}
+
+.pay-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.payment-info {
+  text-align: center;
+  color: #666;
+  font-size: 14px;
+}
+
+.payment-info p {
+  margin: 8px 0;
+}
+
+.payment-info i {
+  color: #28a745;
+  margin-right: 5px;
+}
+
+.test-mode {
+  color: #ff6b6b;
+  font-weight: 500;
+}

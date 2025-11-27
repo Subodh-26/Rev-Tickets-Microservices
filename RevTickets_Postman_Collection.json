@@ -1,0 +1,175 @@
+{
+  "info": {
+    "name": "RevTickets API Collection",
+    "description": "Complete API collection for RevTickets application",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Register User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"User@123\",\n  \"fullName\": \"John Doe\",\n  \"phone\": \"9876543210\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/auth/register",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "auth", "register"]
+            }
+          }
+        },
+        {
+          "name": "Login User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@revtickets.com\",\n  \"password\": \"Admin@123\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/auth/login",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "auth", "login"]
+            }
+          }
+        },
+        {
+          "name": "Get Profile",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer YOUR_JWT_TOKEN_HERE"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8080/api/auth/profile",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "auth", "profile"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Movies (To be implemented)",
+      "item": [
+        {
+          "name": "Get All Movies",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/movies",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "movies"]
+            }
+          }
+        },
+        {
+          "name": "Get Movie By ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/movies/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "movies", "1"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Events (To be implemented)",
+      "item": [
+        {
+          "name": "Get All Events",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/events",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "events"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Admin - Movies (To be implemented)",
+      "item": [
+        {
+          "name": "Create Movie",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer YOUR_ADMIN_JWT_TOKEN"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Dune Part Two\",\n  \"description\": \"Paul Atreides unites with Chani...\",\n  \"durationMinutes\": 166,\n  \"genre\": \"Sci-Fi, Adventure\",\n  \"language\": \"English\",\n  \"parentalRating\": \"PG-13\",\n  \"releaseDate\": \"2024-03-01\",\n  \"cast\": \"[\\\"Timothée Chalamet\\\", \\\"Zendaya\\\"]\",\n  \"crew\": \"[{\\\"role\\\": \\\"Director\\\", \\\"name\\\": \\\"Denis Villeneuve\\\"}]\",\n  \"trailerUrl\": \"https://youtube.com/watch?v=...\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/admin/movies",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "admin", "movies"]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080",
+      "type": "string"
+    },
+    {
+      "key": "jwtToken",
+      "value": "",
+      "type": "string"
+    }
+  ]
+}

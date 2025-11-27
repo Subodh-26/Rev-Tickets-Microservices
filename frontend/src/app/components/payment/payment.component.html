@@ -1,0 +1,89 @@
+<div class="min-h-screen bg-[#050505] text-white pt-20 pb-8">
+  <div class="container mx-auto px-4 max-w-2xl">
+    <!-- Back Button -->
+    <button (click)="router.navigate(['/'])" class="flex items-center gap-2 text-gray-400 hover:text-white transition-colors mb-6">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+      </svg>
+      Back
+    </button>
+
+    <div class="bg-gradient-to-b from-[#1a0a0a] via-[#0a0a0a] to-[#050505] rounded-3xl border border-red-900/30 shadow-2xl p-8">
+      <h2 class="text-3xl font-bold mb-8 text-center bg-gradient-to-r from-red-500 to-red-700 bg-clip-text text-transparent">Payment Checkout</h2>
+      
+      <!-- Booking Summary -->
+      <div class="bg-black/40 border border-white/10 rounded-2xl p-6 mb-6">
+        <h3 class="text-xl font-semibold mb-4 text-red-400">Booking Summary</h3>
+        
+        <div class="space-y-3">
+          <div class="flex justify-between items-center pb-3 border-b border-white/10">
+            <span class="text-gray-400">Type:</span>
+            <span class="font-medium">{{ isOpenEvent ? 'Event Tickets' : 'Movie Tickets' }}</span>
+          </div>
+          
+          <div class="flex justify-between items-start pb-3 border-b border-white/10">
+            <span class="text-gray-400">{{ isOpenEvent ? 'Zones:' : 'Seats:' }}</span>
+            <span class="font-medium text-right max-w-xs">{{ getBookingSummary() }}</span>
+          </div>
+          
+          <div class="flex justify-between items-center pb-3 border-b border-white/10">
+            <span class="text-gray-400">Total Tickets:</span>
+            <span class="font-medium">{{ getTotalTickets() }}</span>
+          </div>
+          
+          <div class="flex justify-between items-center pt-3 text-xl">
+            <span class="font-semibold">Total Amount:</span>
+            <span class="font-bold text-red-500">₹{{ totalAmount | number:'1.2-2' }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Zone Breakdown for Open Events -->
+      <div *ngIf="isOpenEvent && zoneBookings.length > 0" class="bg-gradient-to-r from-yellow-900/20 to-amber-900/20 border border-yellow-700/30 rounded-2xl p-6 mb-6">
+        <h4 class="text-lg font-semibold mb-4 text-yellow-400">Zone Breakdown:</h4>
+        <div class="space-y-2">
+          <div *ngFor="let zone of zoneBookings" class="flex justify-between items-center text-sm">
+            <span class="text-gray-300">{{ zone.zoneName }}: {{ zone.quantity }} × ₹{{ zone.pricePerTicket | number:'1.2-2' }}</span>
+            <span class="font-semibold text-yellow-400">₹{{ (zone.quantity * zone.pricePerTicket) | number:'1.2-2' }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Seat Details for Regular Shows -->
+      <div *ngIf="!isOpenEvent && seatNumbers.length > 0" class="bg-gradient-to-r from-blue-900/20 to-purple-900/20 border border-blue-700/30 rounded-2xl p-6 mb-6">
+        <h4 class="text-lg font-semibold mb-4 text-blue-400">Selected Seats:</h4>
+        <div class="flex flex-wrap gap-2">
+          <span *ngFor="let seat of seatNumbers" class="px-3 py-1 bg-blue-600/30 border border-blue-500/50 rounded-lg text-sm font-medium">
+            {{ seat }}
+          </span>
+        </div>
+      </div>
+
+      <!-- Pay Button -->
+      <button 
+        class="w-full px-10 py-4 bg-red-600 hover:bg-red-700 disabled:bg-gray-600 disabled:cursor-not-allowed rounded-xl font-bold text-lg transition-all shadow-lg hover:shadow-red-600/50 disabled:shadow-none mb-6" 
+        (click)="initiatePayment()" 
+        [disabled]="loading">
+        <span *ngIf="!loading">Pay ₹{{ totalAmount | number:'1.2-2' }} Now</span>
+        <span *ngIf="loading" class="flex items-center justify-center gap-2">
+          <svg class="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+          Processing...
+        </span>
+      </button>
+
+      <!-- Payment Info -->
+      <div class="text-center space-y-2">
+        <p class="text-sm text-gray-400 flex items-center justify-center gap-2">
+          <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+          </svg>
+          Secure payment powered by Razorpay
+        </p>
+        <p class="text-xs text-amber-400 font-medium">🔧 Test Mode - Use test cards for payment</p>
+      </div>
+    </div>
+  </div>
+</div>
