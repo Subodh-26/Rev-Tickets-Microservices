@@ -19,7 +19,7 @@ pipeline {
         stage('Build Backend') {
             steps {
                 dir('backend') {
-                    sh 'mvn clean package -DskipTests'
+                    bat 'mvn clean package -DskipTests'
                 }
             }
         }
@@ -29,7 +29,7 @@ pipeline {
                 stage('Backend Image') {
                     steps {
                         dir('backend') {
-                            sh """
+                            bat """
                                 docker build -t ${BACKEND_IMAGE}:${IMAGE_TAG} .
                                 docker tag ${BACKEND_IMAGE}:${IMAGE_TAG} ${BACKEND_IMAGE}:latest
                             """
@@ -39,7 +39,7 @@ pipeline {
                 stage('Frontend Image') {
                     steps {
                         dir('frontend') {
-                            sh """
+                            bat """
                                 docker build -t ${FRONTEND_IMAGE}:${IMAGE_TAG} .
                                 docker tag ${FRONTEND_IMAGE}:${IMAGE_TAG} ${FRONTEND_IMAGE}:latest
                             """
@@ -105,7 +105,7 @@ pipeline {
             echo 'Deployment failed!'
         }
         always {
-            sh 'docker system prune -f'
+            bat 'docker system prune -f'
         }
     }
 }
