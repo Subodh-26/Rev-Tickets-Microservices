@@ -23,25 +23,44 @@ pipeline {
         }
         
         stage('Build Docker Images') {
-            parallel {
-                stage('Backend Image') {
-                    steps {
+            steps {
+                script {
+                    def backendSuccess = false
+                    def frontendSuccess = false
+                    
+                    // Build Backend
+                    try {
                         dir('backend') {
                             bat """
                                 docker build -t ${BACKEND_IMAGE}:${IMAGE_TAG} .
                                 docker tag ${BACKEND_IMAGE}:${IMAGE_TAG} ${BACKEND_IMAGE}:latest
                             """
                         }
+                        backendSuccess = true
+                        echo '✓ Backend image built successfully'
+                    } catch (Exception e) {
+                        echo "✗ Backend build failed: ${e.message}"
                     }
-                }
-                stage('Frontend Image') {
-                    steps {
+                    
+                    // Build Frontend
+                    try {
                         dir('frontend') {
                             bat """
                                 docker build -t ${FRONTEND_IMAGE}:${IMAGE_TAG} .
                                 docker tag ${FRONTEND_IMAGE}:${IMAGE_TAG} ${FRONTEND_IMAGE}:latest
                             """
                         }
+                        frontendSuccess = true
+                        echo '✓ Frontend image built successfully'
+                    } catch (Exception e) {
+                        echo "✗ Frontend build failed: ${e.message}"
+                    }
+                    
+                    // Summary
+                    if (!backendSuccess && !frontendSuccess) {
+                        error('Both Docker builds failed - check network connectivity')
+                    } else if (!backendSuccess || !frontendSuccess) {
+                        echo 'WARNING: One or more Docker builds failed'
                     }
                 }
             }
