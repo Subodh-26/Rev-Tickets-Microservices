@@ -80,19 +80,17 @@ export class PaymentComponent implements OnInit {
   initiatePayment() {
     this.loading = true;
 
-    const paymentRequest: PaymentRequest = {
+    const paymentRequest: any = {
       totalAmount: this.totalAmount,
-      isOpenEvent: this.isOpenEvent
+      userId: localStorage.getItem('userId') || '1'
     };
 
     if (this.isOpenEvent) {
       paymentRequest.openShowId = this.openShowId;
       paymentRequest.zoneBookings = this.zoneBookings;
-      console.log('Open event payment request:', paymentRequest);
     } else {
       paymentRequest.showId = this.showId;
       paymentRequest.seatNumbers = this.seatNumbers;
-      console.log('Regular show payment request:', paymentRequest);
     }
 
     const token = localStorage.getItem('token');
@@ -113,9 +111,42 @@ export class PaymentComponent implements OnInit {
         },
         error: (error) => {
           console.error('Error creating order:', error);
-          const errorMsg = error.error?.message || error.message || 'Unknown error';
-          alert('Failed to create payment order: ' + errorMsg);
+          alert('Failed to create payment order');
           this.loading = false;
+        }
+      });
+  }
+
+  createBooking(paymentId: string) {
+    const bookingData: any = {
+      userId: localStorage.getItem('userId') || '1',
+      showId: this.showId,
+      totalAmount: this.totalAmount,
+      paymentId: paymentId,
+      seatNumbers: this.seatNumbers
+    };
+
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    });
+
+    this.http.post<any>(`${environment.apiUrl}/bookings`, bookingData, { headers })
+      .subscribe({
+        next: (response) => {
+          this.loading = false;
+          if (response.success) {
+            alert('Booking confirmed!');
+            this.router.navigate(['/']);
+          } else {
+            alert('Booking failed: ' + response.message);
+          }
+        },
+        error: (error) => {
+          this.loading = false;
+          console.error('Error creating booking:', error);
+          alert('Booking failed');
         }
       });
   }
@@ -166,52 +197,8 @@ export class PaymentComponent implements OnInit {
   }
 
   verifyPayment(razorpayResponse: any, bookingId: number) {
-    const verifyRequest = {
-      razorpayOrderId: razorpayResponse.razorpay_order_id,
-      razorpayPaymentId: razorpayResponse.razorpay_payment_id,
-      razorpaySignature: razorpayResponse.razorpay_signature,
-      bookingId: bookingId
-    };
-
-    const token = localStorage.getItem('token');
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json'
-    });
-
-    this.http.post<any>(`${environment.apiUrl}/payments/verify`, verifyRequest, { headers })
-      .subscribe({
-        next: (response) => {
-          this.loading = false;
-          if (response.success) {
-            alert('Payment successful! Your booking has been confirmed.');
-            this.router.navigate(['/']);
-          } else {
-            alert('Payment verification failed: ' + response.message);
-          }
-        },
-        error: (error) => {
-          console.error('Error verifying payment:', error);
-          this.loading = false;
-          
-          // Payment might have succeeded even if verification call failed
-          // This can happen due to network issues, token expiry, etc.
-          const errorMsg = error.error?.message || error.message || 'Unknown error';
-          
-          if (error.status === 401) {
-            // Token expired - but payment likely succeeded
-            alert('Your payment has been processed! Please check "My Bookings" to confirm. (Session expired during verification)');
-            this.router.navigate(['/']);
-          } else if (error.status === 0 || error.status >= 500) {
-            // Network or server error - payment might have succeeded
-            alert('Payment processed but verification incomplete. Please check "My Bookings" to confirm your booking.');
-            this.router.navigate(['/']);
-          } else {
-            // Actual payment failure
-            alert('Payment verification failed: ' + errorMsg);
-          }
-        }
-      });
+    // Create booking after successful payment
+    this.createBooking(razorpayResponse.razorpay_payment_id);
   }
 
   getBookingSummary(): string {

@@ -51,8 +51,8 @@ import { environment } from '../../../../environments/environment';
                     <tr class="hover:bg-white/5 transition-colors">
                       <td class="px-6 py-4 text-sm text-white">{{ booking.bookingId }}</td>
                       <td class="px-6 py-4 text-sm text-white font-mono">{{ booking.bookingReference }}</td>
-                      <td class="px-6 py-4 text-sm text-white">{{ booking.user.fullName }}</td>
-                      <td class="px-6 py-4 text-sm text-gray-400">{{ booking.user.email }}</td>
+                      <td class="px-6 py-4 text-sm text-white">{{ booking.user?.fullName || 'User #' + booking.userId }}</td>
+                      <td class="px-6 py-4 text-sm text-gray-400">{{ booking.user?.email || '-' }}</td>
                       <td class="px-6 py-4 text-sm text-white">{{ booking.totalSeats }}</td>
                       <td class="px-6 py-4 text-sm text-white">₹{{ booking.totalAmount }}</td>
                       <td class="px-6 py-4">

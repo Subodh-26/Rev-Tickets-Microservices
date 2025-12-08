@@ -1,0 +1,66 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+        - id: user-service
+          uri: http://localhost:8081
+          predicates:
+            - Path=/api/auth/**, /api/admin/users, /api/admin/users/**, /api/admin/dashboard/**
+        - id: movie-service-images
+          uri: http://localhost:8082
+          predicates:
+            - Path=/display/**, /banner/**
+        - id: movie-service-api-images
+          uri: http://localhost:8082
+          predicates:
+            - Path=/api/movies/display/**, /api/movies/banner/**
+          filters:
+            - RewritePath=/api/movies/(?<segment>.*), /$\{segment}
+        - id: movie-service
+          uri: http://localhost:8082
+          predicates:
+            - Path=/api/movies/**, /api/events/**, /api/reviews/**, /api/admin/movies/**, /api/admin/events/**
+          filters:
+            - RewritePath=/api/admin/movies/(?<segment>.*), /api/movies/admin/$\{segment}
+            - RewritePath=/api/admin/movies, /api/movies/admin
+            - RewritePath=/api/admin/events/(?<segment>.*), /api/events/admin/$\{segment}
+            - RewritePath=/api/admin/events, /api/events/admin
+        - id: venue-service
+          uri: http://localhost:8083
+          predicates:
+            - Path=/api/venues/**, /api/admin/venues/**
+          filters:
+            - RewritePath=/api/admin/venues/(?<segment>.*), /api/venues/admin/$\{segment}
+            - RewritePath=/api/admin/venues, /api/venues/admin
+        - id: booking-service
+          uri: http://localhost:8084
+          predicates:
+            - Path=/api/bookings/**, /api/seats/**, /api/shows/**, /api/admin/bookings/**, /api/admin/shows/**
+        - id: payment-service
+          uri: http://localhost:8085
+          predicates:
+            - Path=/api/payments/**
+        - id: user-service-dashboard
+          uri: http://localhost:8081
+          predicates:
+            - Path=/api/admin/dashboard/**
+        - id: user-service-users
+          uri: http://localhost:8081
+          predicates:
+            - Path=/api/admin/users, /api/admin/users/**
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true

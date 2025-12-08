@@ -20,7 +20,7 @@ import { environment } from '../../../../environments/environment';
         <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
           <div class="bg-[#121212] rounded-2xl p-6 border border-white/5 text-center hover:border-red-500/30 transition-all">
             <p class="text-gray-400 text-sm mb-2">Total Users</p>
-            <p class="text-4xl font-bold text-red-500">{{ stats?.totalUsers || 3 }}</p>
+            <p class="text-4xl font-bold text-red-500">{{ stats?.totalUsers || 0 }}</p>
           </div>
           
           <div class="bg-[#121212] rounded-2xl p-6 border border-white/5 text-center hover:border-green-500/30 transition-all">

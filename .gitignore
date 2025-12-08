@@ -3,107 +3,73 @@
 *.jar
 *.war
 *.ear
-*.nar
 target/
-*.log
+build/
 
 # Maven
-.mvn/
-mvnw
-mvnw.cmd
 pom.xml.tag
 pom.xml.releaseBackup
 pom.xml.versionsBackup
 pom.xml.next
 release.properties
 dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
 
-# IDE
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+
+# Angular
+.angular/
+dist/
+tmp/
+out-tsc/
+.sass-cache/
+connect.lock
+coverage/
+libpeerconnection.log
+testem.log
+typings/
+
+# IDEs
 .idea/
 *.iml
-*.iws
-*.ipr
 .vscode/
 *.swp
 *.swo
+*~
 .project
 .classpath
 .settings/
 .metadata/
-bin/
+.DS_Store
 
-# Spring Boot
-spring-boot-*.jar
-HELP.md
-
-# Node & NPM
-node_modules/
-dist/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-lerna-debug.log*
-package-lock.json
-yarn.lock
-.pnpm-debug.log*
-
-# Angular
-.angular/
-.nx/
-.angular-cache/
-*.ngfactory.ts
-*.ngsummary.json
-*.metadata.json
+# Logs
+*.log
+app.log
+logs/
 
 # Environment
 .env
 .env.local
 .env.*.local
-application-local.properties
-application-dev.properties
-application-prod.properties
+
+# Docker
+*.pid
+*.seed
+*.pid.lock
 
 # OS
-.DS_Store
 Thumbs.db
 ehthumbs.db
 Desktop.ini
 
-# Uploads & Images (LARGE FILES)
-backend/public/display/*
-backend/public/banner/*
-backend/public/images/*
-!backend/public/display/.gitkeep
-!backend/public/banner/.gitkeep
-!backend/public/images/.gitkeep
-public/images/*
-!public/images/.gitkeep
-
-# Database
-*.db
-*.sqlite
-*.h2.db
-
-# Logs
-logs/
-*.log
-*.log.*
-
-# Build
-build/
-out/
-.cache/
-
-# Test Coverage
-coverage/
-.nyc_output/
-
-# Temporary files
+# Temporary
 *.tmp
-*.temp
 *.bak
-*.swp
-*~
-
-# Documentation (optional - remove if you want to keep)
-*.md.backup
+*.cache

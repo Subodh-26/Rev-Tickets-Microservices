@@ -285,11 +285,27 @@ export class MovieDetailsComponent implements OnInit {
 
   loadReviews() {
     this.loadingReviews = true;
-    // TODO: Replace with actual MongoDB endpoint when ready
-    // For now, using mock data structure
     this.http.get<any>(`${environment.apiUrl}/reviews/movie/${this.movieId}`).subscribe({
       next: (response) => {
         this.reviews = response.data || [];
+        // Fetch user names for each review
+        this.reviews.forEach(review => {
+          console.log('Review:', review);
+          if (review.userId) {
+            this.http.get<any>(`${environment.apiUrl}/admin/users/${review.userId}`).subscribe({
+              next: (userResponse) => {
+                console.log('User response:', userResponse);
+                review.userName = userResponse.data?.fullName || 'Anonymous';
+              },
+              error: (err) => {
+                console.error('Error fetching user:', err);
+                review.userName = 'Anonymous';
+              }
+            });
+          } else {
+            review.userName = 'Anonymous';
+          }
+        });
         this.calculateAverageRating();
         this.loadingReviews = false;
       },
@@ -317,7 +333,7 @@ export class MovieDetailsComponent implements OnInit {
   getImageUrl(path: string): string {
     if (!path) return 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=1000';
     if (path.startsWith('http')) return path;
-    return `http://localhost:8080${path}`;
+    return `${environment.apiUrl.replace('/api', '')}${path}`;
   }
 
   getTrailerUrl(url: string): SafeResourceUrl {
@@ -356,26 +372,37 @@ export class MovieDetailsComponent implements OnInit {
   submitRating() {
     if (!this.userRating) return;
 
+    const userStr = localStorage.getItem('currentUser');
+    console.log('User from localStorage:', userStr);
+    if (!userStr) {
+      alert('Please login to submit a rating');
+      return;
+    }
+    const user = JSON.parse(userStr);
+    console.log('Parsed user:', user);
+
     const review = {
       movieId: this.movieId,
+      userId: user.id || user.userId || 1,
       rating: this.userRating,
-      comment: this.userReview?.trim() || null,
-      reviewType: 'MOVIE'
+      comment: this.userReview?.trim() || null
     };
+    console.log('Submitting review:', review);
 
-    const token = localStorage.getItem('token');
-    const headers = { 'Authorization': `Bearer ${token}` };
-
-    this.http.post<any>(`${environment.apiUrl}/reviews`, review, { headers }).subscribe({
-      next: () => {
+    this.http.post<any>(`${environment.apiUrl}/reviews`, review).subscribe({
+      next: (response) => {
+        console.log('Review submitted:', response);
         this.showRatingModal = false;
         this.userRating = 0;
         this.userReview = '';
         this.loadReviews();
+        alert('Rating submitted successfully!');
       },
       error: (err) => {
-        console.error('Error submitting rating:', err);
-        alert('Failed to submit rating. Please try again.');
+        console.error('Full error:', err);
+        console.error('Error status:', err.status);
+        console.error('Error message:', err.message);
+        alert('Failed to submit rating: ' + (err.error?.message || err.message));
       }
     });
   }

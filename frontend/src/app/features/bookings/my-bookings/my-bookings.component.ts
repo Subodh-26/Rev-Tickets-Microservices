@@ -154,12 +154,17 @@ export class MyBookingsComponent implements OnInit {
   }
 
   loadBookings() {
-    const token = localStorage.getItem('token');
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
-    });
+    const userStr = localStorage.getItem('currentUser');
+    if (!userStr) {
+      console.error('No user found in localStorage');
+      this.loading = false;
+      return;
+    }
+    const user = JSON.parse(userStr);
+    const userId = user.id || user.userId;
+    console.log('Loading bookings for userId:', userId);
 
-    this.http.get<any>(`${environment.apiUrl}/bookings/my-bookings`, { headers }).subscribe({
+    this.http.get<any>(`${environment.apiUrl}/bookings/my-bookings?userId=${userId}`).subscribe({
       next: (response) => {
         console.log('My bookings response:', response);
         this.bookings = response.data || [];

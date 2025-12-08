@@ -42,7 +42,7 @@ import { environment } from '../../../../environments/environment';
                 <th class="px-6 py-4 text-left text-sm font-semibold text-gray-300">Screen</th>
                 <th class="px-6 py-4 text-left text-sm font-semibold text-gray-300">Date & Time</th>
                 <th class="px-6 py-4 text-left text-sm font-semibold text-gray-300">Price</th>
-                <th class="px-6 py-4 text-left text-sm font-semibold text-gray-300">Seats</th>
+                <th class="px-6 py-4 text-left text-sm font-semibold text-gray-300">Available Seats</th>
                 <th class="px-6 py-4 text-left text-sm font-semibold text-gray-300">Progress</th>
                 <th class="px-6 py-4 text-left text-sm font-semibold text-gray-300">Status</th>
                 <th class="px-6 py-4 text-right text-sm font-semibold text-gray-300">Actions</th>
@@ -58,10 +58,13 @@ import { environment } from '../../../../environments/environment';
                   <p class="text-sm text-gray-400">{{ show.showTime | date:'shortTime' }}</p>
                 </td>
                 <td class="px-6 py-4 text-gray-300">₹{{ show.basePrice }}</td>
-                <td class="px-6 py-4 text-gray-300">{{ show.availableSeats }} / {{ show.totalSeats }}</td>
+                <td class="px-6 py-4">
+                  <span class="text-white font-semibold">{{ show.availableSeats }}</span>
+                  <span class="text-gray-400"> / {{ show.totalSeats }}</span>
+                </td>
                 <td class="px-6 py-4">
                   <div class="w-32 bg-gray-700 rounded-full h-2">
-                    <div class="bg-green-500 h-2 rounded-full" [style.width.%]="(show.availableSeats / show.totalSeats) * 100"></div>
+                    <div class="bg-green-500 h-2 rounded-full" [style.width.%]="((show.totalSeats - show.availableSeats) / show.totalSeats) * 100"></div>
                   </div>
                 </td>
                 <td class="px-6 py-4">
@@ -142,8 +145,11 @@ export class ShowListComponent implements OnInit {
           this.shows = [...mappedRegularShows, ...mappedOpenShows];
           console.log('Combined shows before sort:', this.shows.length, this.shows);
         } else {
-          // Old structure
-          this.shows = Array.isArray(data) ? data : [];
+          // Old structure - parse times
+          this.shows = Array.isArray(data) ? data.map((show: any) => ({
+            ...show,
+            showTime: this.parseTime(show.showDate, show.showTime)
+          })) : [];
         }
         
         // Sort by date descending

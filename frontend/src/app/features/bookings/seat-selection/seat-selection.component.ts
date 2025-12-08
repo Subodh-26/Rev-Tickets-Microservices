@@ -260,77 +260,41 @@ export class SeatSelectionComponent implements OnInit {
   }
 
   loadSeats() {
-    // Load actual seat data from backend
     this.http.get<any>(`${environment.apiUrl}/seats/show/${this.showId}`).subscribe({
       next: (response) => {
         const seatData = response.data || [];
+        console.log('Loaded seats:', seatData);
         
-        // Get screen layout with disabled seats
-        let layout: any = {};
-        if (this.show?.screen?.seatLayout) {
-          layout = typeof this.show.screen.seatLayout === 'string' 
-            ? JSON.parse(this.show.screen.seatLayout) 
-            : this.show.screen.seatLayout;
-        }
-        
-        const disabledSeats = new Set(layout.disabledSeats || []);
-        const rows = layout.rows || [];
-        
-        // Create a map of all seats by row and position (from seat_number < 0 positions)
-        const seatMap = new Map<string, any>();
+        // Group seats by row
+        const rowMap = new Map<string, any[]>();
         seatData.forEach((seat: any) => {
-          const position = seat.seatNumber < 0 ? Math.abs(seat.seatNumber) : null;
-          if (position) {
-            // Blocked seat - map by position
-            seatMap.set(`${seat.rowLabel}:${position}`, seat);
-          } else {
-            // Bookable seat - we'll place it sequentially
-            if (!seatMap.has(`${seat.rowLabel}:bookable`)) {
-              seatMap.set(`${seat.rowLabel}:bookable`, []);
-            }
-            seatMap.get(`${seat.rowLabel}:bookable`)!.push(seat);
+          if (!rowMap.has(seat.rowLabel)) {
+            rowMap.set(seat.rowLabel, []);
           }
+          rowMap.get(seat.rowLabel)!.push(seat);
+          this.seatDataMap.set(`${seat.rowLabel}${seat.seatNumber}`, seat);
         });
         
-        // Build the layout with all 26 positions per row
-        this.seats = rows.map((rowLabel: string) => {
-          const items: SeatItem[] = [];
-          const bookableSeats = seatMap.get(`${rowLabel}:bookable`) || [];
-          let bookableIndex = 0;
-          
-          // Create 26 positions (1-26)
-          for (let position = 1; position <= 26; position++) {
-            const positionKey = `${rowLabel}${position}`;
-            
-            if (disabledSeats.has(positionKey)) {
-              // This position is disabled - show as spacer
-              items.push({ type: 'spacer' });
-            } else {
-              // This position should have a bookable seat
-              const seat = bookableSeats[bookableIndex++];
-              if (seat) {
-                const seatKey = `${seat.rowLabel}${seat.seatNumber}`;
-                this.seatDataMap.set(seatKey, seat);
-                
-                items.push({
-                  type: 'seat',
-                  seatNumber: seat.seatNumber, // Sequential number from backend
-                  rowLabel: seat.rowLabel,
-                  available: seat.isAvailable,
-                  price: seat.price,
-                  seatType: seat.seatType,
-                  seatId: seat.seatId,
-                  isBlocked: false
-                });
-              } else {
-                // Shouldn't happen, but show spacer if seat missing
-                items.push({ type: 'spacer' });
-              }
-            }
-          }
-          
-          return { row: rowLabel, items };
-        });
+        // Build seat rows
+        this.seats = Array.from(rowMap.entries())
+          .sort((a, b) => a[0].localeCompare(b[0]))
+          .map(([rowLabel, seats]) => ({
+            row: rowLabel,
+            items: seats
+              .sort((a, b) => a.seatNumber - b.seatNumber)
+              .map(seat => ({
+                type: 'seat' as const,
+                seatNumber: seat.seatNumber,
+                rowLabel: seat.rowLabel,
+                available: seat.isAvailable,
+                price: seat.price,
+                seatType: seat.seatType,
+                seatId: seat.seatId,
+                isBlocked: seat.isBlocked
+              }))
+          }));
+        
+        console.log('Processed seats:', this.seats);
       },
       error: (err) => {
         console.error('Error loading seats:', err);
