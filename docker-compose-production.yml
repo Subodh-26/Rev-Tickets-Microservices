@@ -188,7 +188,8 @@ services:
     ports:
       - "80:80"
     depends_on:
-      - api-gateway
+      api-gateway:
+        condition: service_started
     networks:
       - revtickets-network
     restart: unless-stopped
