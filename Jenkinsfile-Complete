@@ -1,0 +1,143 @@
+pipeline {
+    agent any
+    
+    environment {
+        DOCKER_HUB_CREDENTIALS = credentials('docker-hub-credentials')
+        DOCKER_HUB_REPO = 'yourusername'
+        EC2_HOST = credentials('ec2-host')
+        MYSQL_ROOT_PASSWORD = credentials('mysql-root-password')
+        STRIPE_API_KEY = credentials('stripe-api-key')
+    }
+    
+    stages {
+        stage('Checkout') {
+            steps {
+                echo 'Checking out code from Git...'
+                git branch: 'main', url: 'https://github.com/yourusername/revtickets.git'
+            }
+        }
+        
+        stage('Build Microservices') {
+            steps {
+                echo 'Building all microservices with Maven...'
+                script {
+                    def services = ['eureka-server', 'api-gateway', 'user-service', 'movie-service', 'venue-service', 'booking-service', 'payment-service']
+                    services.each { service ->
+                        dir("microservices/${service}") {
+                            sh 'mvn clean package -DskipTests'
+                        }
+                    }
+                }
+            }
+        }
+        
+        stage('Build Frontend') {
+            steps {
+                echo 'Building Angular frontend...'
+                dir('frontend') {
+                    sh 'npm install'
+                    sh 'npm run build'
+                }
+            }
+        }
+        
+        stage('Run Tests') {
+            steps {
+                echo 'Running tests...'
+                script {
+                    def services = ['eureka-server', 'api-gateway', 'user-service', 'movie-service', 'venue-service', 'booking-service', 'payment-service']
+                    services.each { service ->
+                        dir("microservices/${service}") {
+                            sh 'mvn test'
+                        }
+                    }
+                }
+            }
+        }
+        
+        stage('Build Docker Images') {
+            steps {
+                echo 'Building Docker images...'
+                script {
+                    sh "docker build -t ${DOCKER_HUB_REPO}/revtickets-eureka:latest ./microservices/eureka-server"
+                    sh "docker build -t ${DOCKER_HUB_REPO}/revtickets-gateway:latest ./microservices/api-gateway"
+                    sh "docker build -t ${DOCKER_HUB_REPO}/revtickets-user:latest ./microservices/user-service"
+                    sh "docker build -t ${DOCKER_HUB_REPO}/revtickets-movie:latest ./microservices/movie-service"
+                    sh "docker build -t ${DOCKER_HUB_REPO}/revtickets-venue:latest ./microservices/venue-service"
+                    sh "docker build -t ${DOCKER_HUB_REPO}/revtickets-booking:latest ./microservices/booking-service"
+                    sh "docker build -t ${DOCKER_HUB_REPO}/revtickets-payment:latest ./microservices/payment-service"
+                    sh "docker build -t ${DOCKER_HUB_REPO}/revtickets-frontend:latest ./frontend"
+                }
+            }
+        }
+        
+        stage('Push to Docker Hub') {
+            steps {
+                echo 'Pushing images to Docker Hub...'
+                script {
+                    sh "echo ${DOCKER_HUB_CREDENTIALS_PSW} | docker login -u ${DOCKER_HUB_CREDENTIALS_USR} --password-stdin"
+                    sh "docker push ${DOCKER_HUB_REPO}/revtickets-eureka:latest"
+                    sh "docker push ${DOCKER_HUB_REPO}/revtickets-gateway:latest"
+                    sh "docker push ${DOCKER_HUB_REPO}/revtickets-user:latest"
+                    sh "docker push ${DOCKER_HUB_REPO}/revtickets-movie:latest"
+                    sh "docker push ${DOCKER_HUB_REPO}/revtickets-venue:latest"
+                    sh "docker push ${DOCKER_HUB_REPO}/revtickets-booking:latest"
+                    sh "docker push ${DOCKER_HUB_REPO}/revtickets-payment:latest"
+                    sh "docker push ${DOCKER_HUB_REPO}/revtickets-frontend:latest"
+                }
+            }
+        }
+        
+        stage('Deploy to EC2') {
+            steps {
+                echo 'Deploying to AWS EC2...'
+                sshagent(['ec2-ssh-key']) {
+                    sh """
+                        ssh -o StrictHostKeyChecking=no ubuntu@${EC2_HOST} << 'EOF'
+                        cd /home/ubuntu/revtickets
+                        
+                        # Pull latest images
+                        docker-compose -f docker-compose-production.yml pull
+                        
+                        # Stop and remove old containers
+                        docker-compose -f docker-compose-production.yml down
+                        
+                        # Start new containers
+                        export MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+                        export STRIPE_API_KEY=${STRIPE_API_KEY}
+                        docker-compose -f docker-compose-production.yml up -d
+                        
+                        # Clean up old images
+                        docker image prune -f
+EOF
+                    """
+                }
+            }
+        }
+        
+        stage('Health Check') {
+            steps {
+                echo 'Performing health checks...'
+                script {
+                    sleep(time: 60, unit: 'SECONDS')
+                    sh """
+                        curl -f http://${EC2_HOST}:8761/actuator/health || exit 1
+                        curl -f http://${EC2_HOST}:8080/actuator/health || exit 1
+                    """
+                }
+            }
+        }
+    }
+    
+    post {
+        success {
+            echo 'Deployment successful!'
+        }
+        failure {
+            echo 'Deployment failed!'
+        }
+        always {
+            sh 'docker logout'
+        }
+    }
+}
